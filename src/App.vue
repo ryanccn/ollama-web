@@ -1,0 +1,49 @@
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
+import { RouterView } from 'vue-router';
+
+import { useOllama } from '@/stores/ollama';
+import { useHead } from '@unhead/vue';
+
+import Sidebar from './components/Sidebar.vue';
+
+const ollama = useOllama();
+
+const failed = ref(false);
+
+useHead({ title: 'Ollama Web' });
+
+onMounted(async () => {
+  try {
+    const modelsResp = await fetch('http://localhost:11434/api/tags');
+
+    if (modelsResp.ok) {
+      const { models } = (await modelsResp.json()) as { models: { name: string }[] };
+      ollama.models = models.map((obj) => obj.name);
+
+      window.setTimeout(() => {
+        ollama.ready = true;
+      }, 500);
+    } else {
+      failed.value = true;
+    }
+  } catch (error) {
+    failed.value = true;
+  }
+});
+</script>
+
+<template>
+  <div v-if="ollama.ready" class="fixed inset-0 flex flex-row">
+    <Sidebar />
+
+    <main class="relative h-full grow overflow-y-hidden [-webkit-transform:_translateZ(0);]">
+      <RouterView />
+    </main>
+  </div>
+
+  <div class="fixed inset-0 grid place-content-center font-medium" v-else>
+    <span v-if="!failed">Connecting to Ollama</span>
+    <span v-else class="text-red-500 dark:text-red-400">Failed to connect to Ollama</span>
+  </div>
+</template>
