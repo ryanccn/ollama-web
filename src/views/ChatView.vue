@@ -41,14 +41,14 @@ const generate = async () => {
   const prompt = chat.value.input;
   chat.value.input = '';
 
-  scrollToBottom();
-
   chat.value.history = [
     ...chat.value.history,
     { id: crypto.randomUUID(), actor: ChatActor.HUMAN, content: prompt },
   ];
 
   chat.value.inProgress = true;
+
+  scrollToBottom();
 
   const resp = await fetch('http://localhost:11434/api/generate', {
     method: 'POST',
