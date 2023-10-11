@@ -48,7 +48,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="ollama.ready" class="fixed inset-0 flex flex-row">
+  <div v-if="ollama.ready" class="fixed inset-0 flex flex-col md:flex-row">
     <Sidebar />
 
     <main class="relative h-full grow overflow-y-hidden [-webkit-transform:_translateZ(0);]">

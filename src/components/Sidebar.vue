@@ -17,7 +17,7 @@ const createChat = () => {
 </script>
 
 <template>
-  <nav class="flex w-64 flex-col gap-y-2 bg-neutral-100 p-4 dark:bg-neutral-900">
+  <nav class="flex flex-col gap-y-2 bg-neutral-100 p-4 dark:bg-neutral-900 md:w-64">
     <h1 class="mb-4 font-bold">Ollama Web</h1>
 
     <ol class="flex w-full flex-col gap-y-2 overflow-y-auto">

@@ -149,7 +149,7 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
 <template>
   <div
     v-if="chat"
-    class="fixed inset-x-0 bottom-0 z-40 flex w-full flex-row gap-x-2 bg-neutral-50 p-4 dark:bg-neutral-950"
+    class="fixed inset-x-0 bottom-0 z-40 flex w-full flex-col gap-2 bg-neutral-50 p-4 dark:bg-neutral-950 md:flex-row"
   >
     <input
       type="text"
@@ -173,7 +173,7 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
     </button>
   </div>
 
-  <div class="flex h-screen flex-col gap-y-4 overflow-y-scroll pb-24" ref="chatContainer">
+  <div class="flex h-screen flex-col gap-y-4 overflow-y-scroll pb-64 md:pb-24" ref="chatContainer">
     <div class="flex flex-col gap-y-4 p-8">
       <label class="flex flex-col gap-y-0.5">
         <span class="text-sm font-medium opacity-50">Model</span>
