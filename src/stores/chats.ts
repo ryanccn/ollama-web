@@ -39,7 +39,7 @@ export const useChats = defineStore('chats', () => {
         ...chats.value,
         [id]: {
           title: id,
-          model: models.includes('mistral:latest') ? 'mistral:latest' : models[0],
+          model: models[0],
           input: '',
           inProgress: false,
           history: [],
