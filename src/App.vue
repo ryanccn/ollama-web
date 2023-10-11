@@ -13,7 +13,7 @@ const failed = ref(false);
 
 useHead({ title: 'Ollama Web' });
 
-onMounted(async () => {
+const tryConnect = async () => {
   try {
     const modelsResp = await fetch('http://localhost:11434/api/tags');
 
@@ -26,10 +26,20 @@ onMounted(async () => {
       }, 500);
     } else {
       failed.value = true;
+      window.setTimeout(() => {
+        tryConnect();
+      }, 2500);
     }
   } catch (error) {
     failed.value = true;
+    window.setTimeout(() => {
+      tryConnect();
+    }, 2500);
   }
+};
+
+onMounted(() => {
+  tryConnect();
 });
 </script>
 
@@ -44,6 +54,11 @@ onMounted(async () => {
 
   <div class="fixed inset-0 grid place-content-center font-medium" v-else>
     <span v-if="!failed">Connecting to Ollama</span>
-    <span v-else class="text-red-500 dark:text-red-400">Failed to connect to Ollama</span>
+    <div class="flex flex-col items-center gap-y-2" v-else>
+      <span class="text-red-500 dark:text-red-400">Failed to connect to Ollama</span>
+      <code class="select-all text-sm"
+        >OLLAMA_ORIGINS="https://ollama.ryanccn.dev" ollama serve</code
+      >
+    </div>
   </div>
 </template>
