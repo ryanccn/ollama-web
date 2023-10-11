@@ -41,6 +41,10 @@ const tryConnect = async () => {
 onMounted(() => {
   tryConnect();
 });
+
+onMounted(() => {
+  Notification.requestPermission();
+});
 </script>
 
 <template>

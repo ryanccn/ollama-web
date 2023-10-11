@@ -9,6 +9,7 @@ import TimeAgo from '@/components/TimeAgo.vue';
 
 import { twMerge } from 'tailwind-merge';
 import { useHead } from '@unhead/vue';
+import { useWebNotification, useWindowFocus } from '@vueuse/core';
 
 const route = useRoute();
 
@@ -21,6 +22,8 @@ const chat = computed(() => chats.chats[route.params.id as string]);
 const chatContainer = ref<HTMLDivElement | null>(null);
 
 const shouldStopImmediately = ref(false);
+
+const isFocused = useWindowFocus();
 
 watchEffect(() => {
   useHead({
@@ -111,6 +114,21 @@ const generate = async () => {
   }
 
   chat.value.inProgress = false;
+
+  if (!isFocused.value) {
+    const { isSupported, show } = useWebNotification({
+      title: `${chat.value.title} (${chat.value.model})`,
+      dir: 'auto',
+      lang: 'en',
+      body: chat.value.history[responseIdx].content,
+      renotify: true,
+      tag: chat.value.history[responseIdx].id,
+    });
+
+    if (isSupported.value) {
+      await show();
+    }
+  }
 };
 
 const generateOrStop = () => {
@@ -131,7 +149,7 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
 <template>
   <div
     v-if="chat"
-    class="fixed inset-x-0 bottom-0 flex w-full flex-row gap-x-2 bg-neutral-50 p-4 dark:bg-neutral-950"
+    class="fixed inset-x-0 bottom-0 z-40 flex w-full flex-row gap-x-2 bg-neutral-50 p-4 dark:bg-neutral-950"
   >
     <input
       type="text"
