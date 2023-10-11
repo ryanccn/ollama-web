@@ -19,6 +19,8 @@ const chat = computed(() => chats.chats[route.params.id as string]);
 
 const chatContainer = ref<HTMLDivElement | null>(null);
 
+const shouldStopImmediately = ref(false);
+
 watchEffect(() => {
   useHead({
     title: `${chat.value.title || route.params.id} · Ollama Web`,
@@ -73,6 +75,11 @@ const generate = async () => {
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
+    if (shouldStopImmediately.value) {
+      shouldStopImmediately.value = false;
+      break;
+    }
+
     const chunk = await reader.read();
 
     if (chunk.value) {
@@ -105,6 +112,14 @@ const generate = async () => {
   chat.value.inProgress = false;
 };
 
+const generateOrStop = () => {
+  if (!chat.value.inProgress) {
+    generate();
+  } else {
+    shouldStopImmediately.value = true;
+  }
+};
+
 const handleInputKeyboard = (ev: KeyboardEvent) => {
   if ((ev.ctrlKey || ev.metaKey) && ev.key === 'Enter') {
     generate();
@@ -123,47 +138,52 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
       v-model="chat.input"
       @keydown="handleInputKeyboard"
     />
+
     <button
-      class="rounded bg-blue-500 px-3 py-2 text-sm font-medium text-white disabled:opacity-75"
-      :disabled="chat.inProgress || chat.input.length === 0"
-      @click="generate"
+      :class="
+        twMerge(
+          'rounded px-4 py-2 text-sm font-medium text-white disabled:opacity-75',
+          chat.inProgress ? 'bg-red-500' : 'bg-blue-500',
+        )
+      "
+      :disabled="!chat.inProgress && chat.input.length === 0"
+      @click="generateOrStop"
     >
-      Send
+      <span v-if="!chat.inProgress">Send</span>
+      <span v-else>Stop</span>
     </button>
   </div>
 
-  <div class="mb-4 flex flex-col gap-y-4 p-8">
-    <label class="flex flex-col gap-y-0.5">
-      <span class="text-sm font-medium opacity-50">Model</span>
-      <select class="self-start rounded-lg px-3 py-2" v-model="chat.model">
-        <option v-for="model in ollama.models" :value="model" :key="model">{{ model }}</option>
-      </select>
-    </label>
-  </div>
+  <div class="flex h-screen flex-col gap-y-4 overflow-y-scroll pb-24" ref="chatContainer">
+    <div class="flex flex-col gap-y-4 p-8">
+      <label class="flex flex-col gap-y-0.5">
+        <span class="text-sm font-medium opacity-50">Model</span>
+        <select class="self-start rounded-lg px-3 py-2" v-model="chat.model">
+          <option v-for="model in ollama.models" :value="model" :key="model">{{ model }}</option>
+        </select>
+      </label>
+    </div>
 
-  <ol
-    v-if="chat"
-    class="flex h-screen flex-col gap-y-4 overflow-y-scroll p-8 pb-24"
-    ref="chatContainer"
-  >
-    <li
-      v-for="item in chat.history"
-      :key="item.id"
-      :class="
-        twMerge(
-          'max-w-prose rounded-lg px-4 py-2 text-lg',
-          item.actor === ChatActor.BOT
-            ? 'self-start bg-neutral-100 dark:bg-neutral-900'
-            : 'self-end bg-blue-500',
-        )
-      "
-    >
-      <Markdown
-        :markdown="item.content"
-        :class="item.actor === ChatActor.HUMAN ? 'text-white' : ''"
-      />
-    </li>
-  </ol>
+    <ol v-if="chat" class="flex flex-col gap-y-4 p-8">
+      <li
+        v-for="item in chat.history"
+        :key="item.id"
+        :class="
+          twMerge(
+            'max-w-prose rounded-lg px-4 py-2 text-lg',
+            item.actor === ChatActor.BOT
+              ? 'self-start bg-neutral-100 dark:bg-neutral-900'
+              : 'self-end bg-blue-500',
+          )
+        "
+      >
+        <Markdown
+          :markdown="item.content"
+          :class="item.actor === ChatActor.HUMAN ? 'text-white' : ''"
+        />
+      </li>
+    </ol>
+  </div>
 </template>
 
 <style scoped>
