@@ -49,19 +49,19 @@ const deleteChat = () => {
   <li
     :class="
       twMerge(
-        'group relative flex w-full flex-row justify-between rounded px-2 py-1 transition-colors',
+        'group relative flex w-full flex-row justify-between gap-x-3 rounded px-2 py-1 transition-colors',
         currentChatId === id ? 'bg-neutral-200 dark:bg-neutral-800' : null,
       )
     "
   >
     <RouterLink :to="`/c/${id}`" class="absolute inset-0 z-0" />
 
-    <span v-if="!editingTitle" class="line-clamp-1 block overflow-ellipsis text-sm">
+    <span v-if="!editingTitle" class="line-clamp-1 block grow overflow-ellipsis text-sm">
       {{ chats.chats[id].title }}
     </span>
-    <input v-else v-model="title" class="z-20 bg-transparent text-sm" />
+    <input v-else v-model="title" class="z-20 grow bg-transparent text-sm" />
 
-    <div class="z-10 hidden flex-row gap-x-1 group-hover:flex">
+    <div class="z-10 hidden shrink-0 flex-row gap-x-1 group-hover:flex">
       <button @click="toggleEdit">
         <PencilIcon v-if="!editingTitle" class="button-icon" />
         <SaveIcon v-else class="button-icon" />
