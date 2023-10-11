@@ -177,7 +177,7 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
           :markdown="item.content"
           :class="
             twMerge(
-              'rounded-lg px-4 py-2 text-lg',
+              'max-w-prose rounded-lg px-4 py-2 text-lg',
               item.actor === ChatActor.BOT
                 ? 'bg-neutral-100 dark:bg-neutral-900'
                 : 'bg-blue-500 text-white',
