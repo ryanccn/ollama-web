@@ -22,9 +22,10 @@ export interface ChatV1 {
   title: string;
 
   input: string;
+  inProgress: boolean;
+
   history: ChatHistory[];
   context: number[];
-  inProgress: boolean;
 }
 
 export const useChats = defineStore('chats', () => {

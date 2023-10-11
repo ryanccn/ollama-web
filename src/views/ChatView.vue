@@ -105,7 +105,7 @@ const generate = async () => {
         chat.value.history = [...chat.value.history];
         scrollToBottom();
       } else {
-        chat.value.context = [...chat.value.context, ...chunkData.context];
+        chat.value.context = [...chunkData.context];
         break;
       }
     }
@@ -202,7 +202,10 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
             )
           "
         />
-        <span class="text-xs opacity-50"><TimeAgo :date="item.timestamp" /></span>
+
+        <span class="text-xs opacity-50">
+          <TimeAgo :date="item.timestamp" />
+        </span>
       </li>
     </ol>
   </div>
