@@ -188,7 +188,10 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
         v-for="item in chat.history"
         :key="item.id"
         :class="
-          twMerge('flex flex-col gap-y-1', item.actor === ChatActor.BOT ? 'self-start' : 'self-end')
+          twMerge(
+            'flex flex-col gap-y-1',
+            item.actor === ChatActor.BOT ? 'items-start self-start' : 'items-end self-end',
+          )
         "
       >
         <Markdown
