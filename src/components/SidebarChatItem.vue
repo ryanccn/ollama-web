@@ -54,7 +54,7 @@ const deleteChat = () => {
       )
     "
   >
-    <RouterLink :to="`/c/${id}`" class="absolute inset-0 z-0" />
+    <RouterLink :to="`/c/${id}`" class="absolute inset-0 z-0 focus:ring-0 focus:ring-offset-0" />
 
     <span v-if="!editingTitle" class="line-clamp-1 block grow overflow-ellipsis text-sm">
       {{ chats.chats[id].title }}
