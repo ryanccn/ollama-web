@@ -15,10 +15,7 @@ const router = createRouter({
         const chats = useChats();
         const chat = chats.chats[to.params.id];
 
-        if (chat === undefined) {
-          const newId = chats.create();
-          return { name: 'chat', params: { id: newId } };
-        }
+        if (chat === undefined) return false;
       },
     },
   ],
