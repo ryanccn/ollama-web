@@ -14,6 +14,7 @@ export interface ChatHistory {
   id: string;
   actor: ChatActor;
   content: string;
+  timestamp: number;
 }
 
 export interface ChatV1 {

@@ -5,6 +5,7 @@ import { useRoute } from 'vue-router';
 
 import { computed, ref, watchEffect } from 'vue';
 import Markdown from '@/components/Markdown.vue';
+import TimeAgo from '@/components/TimeAgo.vue';
 
 import { twMerge } from 'tailwind-merge';
 import { useHead } from '@unhead/vue';
@@ -43,7 +44,7 @@ const generate = async () => {
 
   chat.value.history = [
     ...chat.value.history,
-    { id: crypto.randomUUID(), actor: ChatActor.HUMAN, content: prompt },
+    { id: crypto.randomUUID(), actor: ChatActor.HUMAN, content: prompt, timestamp: Date.now() },
   ];
 
   chat.value.inProgress = true;
@@ -68,7 +69,7 @@ const generate = async () => {
   const responseIdx = chat.value.history.length;
   chat.value.history = [
     ...chat.value.history,
-    { id: crypto.randomUUID(), actor: ChatActor.BOT, content: '' },
+    { id: crypto.randomUUID(), actor: ChatActor.BOT, content: '', timestamp: Date.now() },
   ];
 
   const reader = resp.body.getReader();
@@ -169,18 +170,21 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
         v-for="item in chat.history"
         :key="item.id"
         :class="
-          twMerge(
-            'max-w-prose rounded-lg px-4 py-2 text-lg',
-            item.actor === ChatActor.BOT
-              ? 'self-start bg-neutral-100 dark:bg-neutral-900'
-              : 'self-end bg-blue-500',
-          )
+          twMerge('flex flex-col gap-y-1', item.actor === ChatActor.BOT ? 'self-start' : 'self-end')
         "
       >
         <Markdown
           :markdown="item.content"
-          :class="item.actor === ChatActor.HUMAN ? 'text-white' : ''"
+          :class="
+            twMerge(
+              'rounded-lg px-4 py-2 text-lg',
+              item.actor === ChatActor.BOT
+                ? 'bg-neutral-100 dark:bg-neutral-900'
+                : 'bg-blue-500 text-white',
+            )
+          "
         />
+        <span class="text-xs opacity-50"><TimeAgo :date="item.timestamp" /></span>
       </li>
     </ol>
   </div>
