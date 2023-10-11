@@ -143,11 +143,14 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
           'max-w-prose rounded-lg px-4 py-2 text-lg',
           item.actor === ChatActor.BOT
             ? 'self-start bg-neutral-100 dark:bg-neutral-900'
-            : 'self-end bg-blue-500 text-white',
+            : 'self-end bg-blue-500',
         )
       "
     >
-      <Markdown :markdown="item.content" />
+      <Markdown
+        :markdown="item.content"
+        :class="item.actor === ChatActor.HUMAN ? 'text-white' : ''"
+      />
     </li>
   </ol>
 </template>
