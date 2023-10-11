@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useChats, ChatActor } from '@/stores/chats';
+import { useOllama } from '@/stores/ollama';
 import { useRoute } from 'vue-router';
 
 import { computed, ref, watchEffect } from 'vue';
@@ -12,6 +13,7 @@ const route = useRoute();
 
 const decoder = new TextDecoder();
 
+const ollama = useOllama();
 const chats = useChats();
 const chat = computed(() => chats.chats[route.params.id as string]);
 
@@ -130,6 +132,15 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
     </button>
   </div>
 
+  <div class="mb-4 flex flex-col gap-y-4 p-8">
+    <label class="flex flex-col gap-y-0.5">
+      <span class="text-sm font-medium opacity-50">Model</span>
+      <select class="self-start rounded-lg px-3 py-2" v-model="chat.model">
+        <option v-for="model in ollama.models" :value="model" :key="model">{{ model }}</option>
+      </select>
+    </label>
+  </div>
+
   <ol
     v-if="chat"
     class="flex h-screen flex-col gap-y-4 overflow-y-scroll p-8 pb-24"
@@ -154,3 +165,9 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
     </li>
   </ol>
 </template>
+
+<style scoped>
+select {
+  @apply bg-neutral-100 dark:bg-neutral-800;
+}
+</style>
