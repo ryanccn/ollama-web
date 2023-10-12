@@ -7,6 +7,7 @@ import { computed, ref, watchEffect } from 'vue';
 import Markdown from '@/components/Markdown.vue';
 import TimeAgo from '@/components/TimeAgo.vue';
 import CopyButton from '@/components/CopyButton.vue';
+import VoiceSynthesisButton from '@/components/VoiceSynthesisButton.vue';
 
 import { twMerge } from 'tailwind-merge';
 import { useHead } from '@unhead/vue';
@@ -219,6 +220,7 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
             <TimeAgo :date="item.timestamp" />
           </span>
           <CopyButton :content="item.content" />
+          <VoiceSynthesisButton :content="item.content" />
         </div>
       </li>
     </ol>
