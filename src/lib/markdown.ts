@@ -8,17 +8,11 @@ import rehypeStringify from 'rehype-stringify';
 const processor = unified()
   .use(remarkParse)
   .use(remarkRehype)
+  .use(rehypeSanitize)
   .use(rehypeShikiji, {
     themes: {
       light: 'vitesse-light',
       dark: 'vitesse-dark',
-    },
-  })
-  .use(rehypeSanitize, {
-    attributes: {
-      pre: ['class', 'style'],
-      div: ['class', 'style'],
-      span: ['class', 'style'],
     },
   })
   .use(rehypeStringify);
