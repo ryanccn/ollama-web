@@ -50,7 +50,7 @@ const deleteChat = () => {
     :class="
       twMerge(
         'group relative flex w-full flex-row justify-between gap-x-3 rounded px-2 py-1 transition-colors',
-        currentChatId === id ? 'bg-neutral-200 dark:bg-neutral-800' : null,
+        currentChatId === id ? 'bg-overlay' : null,
       )
     "
   >

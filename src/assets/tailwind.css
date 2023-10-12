@@ -8,8 +8,26 @@
   }
 
   body {
-    /* @apply antialiased; */
-    @apply bg-white text-neutral-950 dark:bg-neutral-950 dark:text-white;
+    @apply antialiased;
+    @apply bg-base text-text;
+  }
+
+  html {
+    --ow-base: 250 250 250;
+    --ow-surface: 245 245 245;
+    --ow-overlay: 229 229 229;
+    --ow-accent: 59 130 246;
+    --ow-text: 0 0 0;
+    --ow-danger: 248 113 113;
+  }
+
+  html.dark {
+    --ow-base: 10 10 10;
+    --ow-surface: 23 23 23;
+    --ow-overlay: 38 38 38;
+    --ow-accent: 59 130 246;
+    --ow-text: 255 255 255;
+    --ow-danger: 239 68 68;
   }
 
   a,
@@ -17,6 +35,12 @@
   input,
   textarea,
   select {
-    @apply outline-none ring-blue-500 ring-offset-2 ring-offset-white focus:ring-2 dark:ring-offset-neutral-950;
+    @apply ring-accent ring-offset-base outline-none ring-offset-2 focus:ring-2;
+  }
+}
+
+@layer components {
+  #app {
+    @apply fixed inset-0 flex flex-col md:flex-row;
   }
 }

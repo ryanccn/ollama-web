@@ -149,11 +149,11 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
 <template>
   <div
     v-if="chat"
-    class="fixed inset-x-0 bottom-0 z-40 flex w-full flex-col gap-2 bg-neutral-50 p-4 dark:bg-neutral-950 md:flex-row"
+    class="fixed inset-x-0 bottom-0 z-40 flex w-full flex-col gap-2 bg-base p-4 md:flex-row"
   >
     <input
       type="text"
-      class="flex-grow rounded bg-neutral-100 px-3 py-2 text-base focus:outline-none focus:ring-2 dark:bg-neutral-900"
+      class="flex-grow rounded bg-surface px-3 py-2 text-text focus:outline-none focus:ring-2"
       v-model="chat.input"
       @keydown="handleInputKeyboard"
     />
@@ -162,7 +162,7 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
       :class="
         twMerge(
           'rounded px-4 py-2 text-sm font-medium text-white disabled:opacity-75',
-          chat.inProgress ? 'bg-red-500' : 'bg-blue-500',
+          chat.inProgress ? 'bg-danger' : 'bg-accent',
         )
       "
       :disabled="!chat.inProgress && chat.input.length === 0"
@@ -199,9 +199,7 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
           :class="
             twMerge(
               'max-w-prose rounded-lg px-4 py-2 text-lg',
-              item.actor === ChatActor.BOT
-                ? 'bg-neutral-100 dark:bg-neutral-900'
-                : 'bg-blue-500 text-white',
+              item.actor === ChatActor.BOT ? 'bg-surface' : 'bg-accent text-white',
             )
           "
         />
@@ -216,6 +214,6 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
 
 <style scoped>
 select {
-  @apply bg-neutral-100 dark:bg-neutral-800;
+  @apply bg-surface;
 }
 </style>
