@@ -20,6 +20,7 @@ export interface ChatHistory {
 export interface ChatV1 {
   model: string;
   title: string;
+  system: string;
 
   input: string;
   inProgress: boolean;
@@ -42,6 +43,7 @@ export const useChats = defineStore('chats', () => {
         [id]: {
           title: id,
           model: models[0],
+          system: '',
           input: '',
           inProgress: false,
           history: [],

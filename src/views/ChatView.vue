@@ -60,6 +60,7 @@ const generate = async () => {
       model: chat.value.model,
       prompt: prompt,
       context: chat.value.context,
+      system: chat.value.system,
     }),
   });
 
