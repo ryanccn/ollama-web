@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { useSpeechSynthesis } from '@vueuse/core';
+import { toRefs, useSpeechSynthesis } from '@vueuse/core';
 
 import { PlayCircleIcon, StopCircleIcon } from 'lucide-vue-next';
 
 const props = defineProps<{ content: string }>();
+const { content } = toRefs(props);
 
-const { isSupported, isPlaying, speak, stop } = useSpeechSynthesis(props.content);
+const { isSupported, isPlaying, speak, stop } = useSpeechSynthesis(content);
 const toggle = () => {
   if (isPlaying.value) stop();
   else speak();
