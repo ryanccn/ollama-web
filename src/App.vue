@@ -56,7 +56,7 @@ onMounted(() => {
 
   <Transition name="fade">
     <div
-      class="bg-base fixed inset-0 z-[9999] grid place-content-center font-medium"
+      class="fixed inset-0 z-[9999] grid place-content-center bg-base font-medium"
       v-if="!ollama.ready"
     >
       <span v-if="!failed">Connecting to Ollama</span>
