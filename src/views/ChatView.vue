@@ -182,6 +182,14 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
           <option v-for="model in ollama.models" :value="model" :key="model">{{ model }}</option>
         </select>
       </label>
+
+      <label class="flex flex-col gap-y-0.5">
+        <span class="text-sm font-medium opacity-50">System prompt</span>
+        <textarea
+          v-model="chat.system"
+          class="max-w-prose resize-y rounded bg-surface p-2"
+        ></textarea>
+      </label>
     </div>
 
     <ol v-if="chat" class="flex flex-col gap-y-4 p-8">
@@ -199,7 +207,7 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
           :markdown="item.content"
           :class="
             twMerge(
-              'max-w-prose rounded-lg px-4 py-2 text-lg',
+              'max-w-prose rounded-lg p-4',
               item.actor === ChatActor.BOT ? 'bg-surface' : 'bg-accent text-white',
             )
           "

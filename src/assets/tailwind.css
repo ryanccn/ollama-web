@@ -30,12 +30,21 @@
     --ow-danger: 239 68 68;
   }
 
+  html.dark .shiki,
+  html.dark .shiki span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+
   a,
   button,
   input,
   textarea,
   select {
-    @apply ring-accent ring-offset-base outline-none ring-offset-2 focus:ring-2;
+    @apply outline-none ring-accent ring-offset-2 ring-offset-base focus:ring-2;
   }
 }
 
