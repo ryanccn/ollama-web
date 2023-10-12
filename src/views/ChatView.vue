@@ -2,16 +2,17 @@
 import { useChats, ChatActor } from '@/stores/chats';
 import { useOllama } from '@/stores/ollama';
 import { useRoute } from 'vue-router';
+import { useHead } from '@unhead/vue';
+import { useWebNotification, useWindowFocus } from '@vueuse/core';
 
 import { computed, ref, watchEffect } from 'vue';
+
 import Markdown from '@/components/Markdown.vue';
 import TimeAgo from '@/components/TimeAgo.vue';
 import CopyButton from '@/components/CopyButton.vue';
 import VoiceSynthesisButton from '@/components/VoiceSynthesisButton.vue';
 
 import { twMerge } from 'tailwind-merge';
-import { useHead } from '@unhead/vue';
-import { useWebNotification, useWindowFocus } from '@vueuse/core';
 
 const route = useRoute();
 
@@ -42,6 +43,13 @@ const scrollToBottom = () => {
 watchEffect(() => {
   if (chatContainer.value) scrollToBottom();
 });
+
+type OllamaResponse =
+  | {
+      response: string;
+      done: false;
+    }
+  | { context: number[]; done: true };
 
 const generate = async () => {
   const prompt = chat.value.input;
@@ -90,22 +98,14 @@ const generate = async () => {
     const chunk = await reader.read();
 
     if (chunk.value) {
-      const chunkData = JSON.parse(decoder.decode(chunk.value)) as
-        | {
-            response: string;
-            done: false;
-          }
-        | { context: number[]; done: true };
+      const chunkData = JSON.parse(decoder.decode(chunk.value)) as OllamaResponse;
 
       if (!chunkData.done) {
         if (chunkData.response) {
-          chat.value.history[responseIdx] = {
-            ...chat.value.history[responseIdx],
-            content: chat.value.history[responseIdx].content + chunkData.response,
-          };
+          chat.value.history[responseIdx].content =
+            chat.value.history[responseIdx].content + chunkData.response;
         }
 
-        chat.value.history = [...chat.value.history];
         scrollToBottom();
       } else {
         chat.value.context = [...chunkData.context];
