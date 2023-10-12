@@ -18,8 +18,8 @@ dependencies:
     specifier: ^10.5.0
     version: 10.5.0(vue@3.3.4)
   lucide-vue-next:
-    specifier: ^0.284.0
-    version: 0.284.0(vue@3.3.4)
+    specifier: ^0.286.0
+    version: 0.286.0(vue@3.3.4)
   nanoid:
     specifier: ^5.0.1
     version: 5.0.1
@@ -1976,8 +1976,8 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /lucide-vue-next@0.284.0(vue@3.3.4):
-    resolution: {integrity: sha512-RLO8mV88Uckm2X+RuOJY3zGwRk0MhLsJiWwnDQ0GvwIPXnvGH36jYe+C6/lmEbkTLxdm+PqMZ3Pe36yFD1CYUA==}
+  /lucide-vue-next@0.286.0(vue@3.3.4):
+    resolution: {integrity: sha512-32ENlCDVP5MxTlM9oWRC339/iSF8Mo8NXdR/6LwW6g82QIZBZ21XkVlTozJJOqSwc3MHf2XverAdtQ/IKuF+4Q==}
     peerDependencies:
       vue: '>=3.0.1'
     dependencies:
