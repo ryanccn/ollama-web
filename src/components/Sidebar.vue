@@ -29,7 +29,7 @@ const nextColorMode = () => {
     <div class="flex flex-col gap-y-2">
       <h1 class="mb-4 font-bold">Ollama Web</h1>
 
-      <ol class="flex w-full flex-col gap-y-2 overflow-y-auto">
+      <ol class="flex w-full flex-col gap-y-1">
         <SidebarChatItem v-for="(_, id) in chats.chats" :key="id" :id="id" />
       </ol>
 

@@ -49,7 +49,7 @@ const deleteChat = () => {
   <li
     :class="
       twMerge(
-        'group relative flex w-full flex-row justify-between gap-x-3 rounded px-2 py-1 transition-colors',
+        'group relative flex w-full flex-row justify-between gap-x-3 rounded px-3 py-2 transition-colors',
         currentChatId === id ? 'bg-overlay' : null,
       )
     "
@@ -61,7 +61,14 @@ const deleteChat = () => {
     </span>
     <input v-else v-model="title" class="z-20 grow bg-transparent text-sm" />
 
-    <div class="z-10 hidden shrink-0 flex-row gap-x-1 group-hover:flex">
+    <div
+      :class="
+        twMerge(
+          'z-10 hidden shrink-0 flex-row gap-x-1 group-hover:flex',
+          editingTitle ? 'flex' : null,
+        )
+      "
+    >
       <button @click="toggleEdit">
         <PencilIcon v-if="!editingTitle" class="button-icon" />
         <SaveIcon v-else class="button-icon" />
