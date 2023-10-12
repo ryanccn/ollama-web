@@ -19,6 +19,7 @@
     --ow-accent: 59 130 246;
     --ow-text: 0 0 0;
     --ow-danger: 248 113 113;
+    color-scheme: light;
   }
 
   html.dark {
@@ -28,6 +29,7 @@
     --ow-accent: 59 130 246;
     --ow-text: 255 255 255;
     --ow-danger: 239 68 68;
+    color-scheme: dark;
   }
 
   html.dark .shiki,
