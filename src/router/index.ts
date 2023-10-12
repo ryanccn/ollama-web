@@ -3,7 +3,7 @@ import ChatView from '@/views/ChatView.vue';
 import { useChats } from '@/stores/chats';
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: '/c/:id',
