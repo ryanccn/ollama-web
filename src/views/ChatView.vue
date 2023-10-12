@@ -6,6 +6,7 @@ import { useRoute } from 'vue-router';
 import { computed, ref, watchEffect } from 'vue';
 import Markdown from '@/components/Markdown.vue';
 import TimeAgo from '@/components/TimeAgo.vue';
+import CopyButton from '@/components/CopyButton.vue';
 
 import { twMerge } from 'tailwind-merge';
 import { useHead } from '@unhead/vue';
@@ -213,9 +214,12 @@ const handleInputKeyboard = (ev: KeyboardEvent) => {
           "
         />
 
-        <span class="text-xs opacity-50">
-          <TimeAgo :date="item.timestamp" />
-        </span>
+        <div class="flex flex-row flex-wrap items-center gap-x-2">
+          <span class="text-xs opacity-50">
+            <TimeAgo :date="item.timestamp" />
+          </span>
+          <CopyButton :content="item.content" />
+        </div>
       </li>
     </ol>
   </div>
