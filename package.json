@@ -16,7 +16,7 @@
     "@unhead/vue": "^1.7.4",
     "@vueuse/core": "^10.5.0",
     "@vueuse/shared": "^10.5.0",
-    "lucide-vue-next": "^0.290.0",
+    "lucide-vue-next": "^0.292.0",
     "nanoid": "^5.0.2",
     "pinia": "^2.1.7",
     "rehype-sanitize": "^6.0.0",
