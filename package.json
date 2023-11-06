@@ -40,7 +40,7 @@
     "@vue/eslint-config-typescript": "^12.0.0",
     "@vue/tsconfig": "^0.4.0",
     "autoprefixer": "^10.4.16",
-    "eslint": "^8.52.0",
+    "eslint": "^8.53.0",
     "eslint-plugin-vue": "^9.18.1",
     "npm-run-all2": "^6.0.6",
     "prettier": "^3.0.3",
